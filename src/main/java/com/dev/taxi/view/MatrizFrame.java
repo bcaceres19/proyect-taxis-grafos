@@ -8,12 +8,12 @@ package com.dev.taxi.view;
  *
  * @author bacg2
  */
-public class Matriz extends javax.swing.JFrame {
+public class MatrizFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form Matriz
      */
-    public Matriz(String matrizString) {
+    public MatrizFrame(String matrizString) {
         initComponents();
         jTextArea1.setText(matrizString);
     }

@@ -13,12 +13,12 @@ public class OpcionesFrame extends javax.swing.JFrame {
     private String[] datosTaxis;
     private String[] datosPersonas;
     private Boolean cerrar = false;
-    private Inicio inicioFrame;
+    private InicioFrame inicioFrame;
     private String elementoSeleccionado;
     /**
      * Creates new form OpcionesFrame
      */
-    public OpcionesFrame(List<String> datosTaxisList, List<String> datosPersonasList, Inicio inicio) {
+    public OpcionesFrame(List<String> datosTaxisList, List<String> datosPersonasList, InicioFrame inicio) {
         datosTaxis = datosTaxisList.toArray(new String[0]);
         datosPersonas = datosPersonasList.toArray(new String[0]);
         inicioFrame = inicio;

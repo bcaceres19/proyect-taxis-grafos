@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class RespuestaGrafoDto {
-    private String matris;
+    private String matriz;
 
     private DijkstraDto dijkstra;
 }

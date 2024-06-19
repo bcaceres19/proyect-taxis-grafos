@@ -7,6 +7,8 @@ package com.dev.taxi.view;
 import com.dev.taxi.dto.RespuestaGrafoDto;
 import com.dev.taxi.service.ITaxiService;
 import com.dev.taxi.service.impl.TaxiService;
+import com.dev.taxi.utils.constant.Constantes;
+import static com.dev.taxi.utils.constant.Constantes.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ import javax.swing.JOptionPane;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class Inicio extends javax.swing.JFrame {
+public class InicioFrame extends javax.swing.JFrame {
 
     private String lugarInicioTaxi;
     private String lugarInicioPersona;
@@ -31,22 +33,21 @@ public class Inicio extends javax.swing.JFrame {
     private RespuestaGrafoDto trazaPersonaRespuesta;
     private Map<String, JButton> botonesTaxis = new HashMap<>();
     private Map<String, JButton> botonesPersonas = new HashMap<>();
-    
-    
+
     /**
      * Creates new form Inicio
      */
-    public Inicio() {
+    public InicioFrame() {
         initComponents();
         this.itaxiService = new TaxiService();
-        this.botonesLugares.put("I", this.zonaI);
-        this.botonesLugares.put("A", this.zonaA);
-        this.botonesLugares.put("B", this.zonaB);
-        this.botonesLugares.put("C", this.zonaC);
-        this.botonesLugares.put("D", this.zonaD);
-        this.botonesLugares.put("E", this.zonaE);
-        this.botonesLugares.put("F", this.zonaF);
-        this.botonesLugares.put("T", this.zonaT);
+        this.botonesLugares.put(BOTON_I, this.zonaI);
+        this.botonesLugares.put(BOTON_A, this.zonaA);
+        this.botonesLugares.put(BOTON_B, this.zonaB);
+        this.botonesLugares.put(BOTON_C, this.zonaC);
+        this.botonesLugares.put(BOTON_D, this.zonaD);
+        this.botonesLugares.put(BOTON_E, this.zonaE);
+        this.botonesLugares.put(BOTON_F, this.zonaF);
+        this.botonesLugares.put(BOTON_T, this.zonaT);
         this.lugarPersona();
         this.lugarTaxi();
         this.simular1.setEnabled(false);
@@ -58,12 +59,12 @@ public class Inicio extends javax.swing.JFrame {
 
     private void lugarPersona() {
         List<String> claves = new ArrayList<>(botonesLugares.keySet());
-        while(true){
+        while (true) {
             Random random = new Random();
             String clave = claves.get(random.nextInt(claves.size()));
-            if(!botonesLugares.get(clave).getBackground().equals(Color.RED) 
+            if (!botonesLugares.get(clave).getBackground().equals(Color.RED)
                     && !botonesLugares.get(clave).getBackground().equals(Color.YELLOW)
-                    && !botonesLugares.get(clave).getBackground().equals(Color.BLUE)){
+                    && !botonesLugares.get(clave).getBackground().equals(Color.BLUE)) {
                 this.lugarInicioPersona = clave;
                 this.botonesLugares.get(this.lugarInicioPersona).setBackground(Color.RED);
                 this.botonesPersonas.put(lugarInicioPersona, this.botonesLugares.get(this.lugarInicioPersona));
@@ -80,9 +81,9 @@ public class Inicio extends javax.swing.JFrame {
             Random random = new Random();
             this.lugarInicioTaxi = claves.get(random.nextInt(claves.size()));
             botonPersona = botonesLugares.get(this.lugarInicioTaxi);
-            if (!botonPersona.getBackground().equals(Color.RED) &&
-                    !botonPersona.getBackground().equals(Color.blue) &&
-                    !botonesTaxis.containsKey(lugarInicioTaxi)) {
+            if (!botonPersona.getBackground().equals(Color.RED)
+                    && !botonPersona.getBackground().equals(Color.blue)
+                    && !botonesTaxis.containsKey(lugarInicioTaxi)) {
                 botonesLugares.get(this.lugarInicioTaxi).setBackground(Color.YELLOW);
                 botonesTaxis.put(lugarInicioTaxi, botonesLugares.get(this.lugarInicioTaxi));
                 break;
@@ -150,6 +151,9 @@ public class Inicio extends javax.swing.JFrame {
         core = new javax.swing.JToggleButton();
         valorKm = new javax.swing.JLabel();
         cantidadKm = new javax.swing.JLabel();
+        destino = new javax.swing.JLabel();
+        trazaTaxiText = new javax.swing.JLabel();
+        trazaPersonaText1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -408,46 +412,66 @@ public class Inicio extends javax.swing.JFrame {
         cantidadKm.setText("Km:0.0");
         getContentPane().add(cantidadKm, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 80, 70));
 
+        destino.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        destino.setText("Destino:");
+        getContentPane().add(destino, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 150, 90));
+
+        trazaTaxiText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        trazaTaxiText.setText("Traza Taxi:");
+        getContentPane().add(trazaTaxiText, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 250, -1));
+
+        trazaPersonaText1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        trazaPersonaText1.setText("Traza Persona:");
+        getContentPane().add(trazaPersonaText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 250, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void zonaAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaAActionPerformed
         this.lugarFinalPersona = this.zonaA.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_A);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaAActionPerformed
 
     private void zonaIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaIActionPerformed
         this.lugarFinalPersona = this.zonaI.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_I);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaIActionPerformed
 
     private void zonaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaBActionPerformed
         this.lugarFinalPersona = this.zonaB.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_B);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaBActionPerformed
 
     private void zonaFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaFActionPerformed
         this.lugarFinalPersona = this.zonaF.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_F);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaFActionPerformed
 
     private void zonaDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaDActionPerformed
         this.lugarFinalPersona = this.zonaD.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_D);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaDActionPerformed
 
     private void zonaEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaEActionPerformed
         this.lugarFinalPersona = this.zonaE.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_E);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaEActionPerformed
 
     private void zonaCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaCActionPerformed
         this.lugarFinalPersona = this.zonaC.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_C);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaCActionPerformed
 
     private void zonaTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaTActionPerformed
         this.lugarFinalPersona = this.zonaT.getText();
+        this.destino.setText(Constantes.DESTINO + Constantes.BOTON_T);
         this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaTActionPerformed
 
@@ -458,25 +482,26 @@ public class Inicio extends javax.swing.JFrame {
             List<String> llavesTaxis = new ArrayList<>();
             List<String> llavesPersonas = new ArrayList<>();
 
-            for(String llave : botonesTaxis.keySet()){
+            for (String llave : botonesTaxis.keySet()) {
                 llavesTaxis.add(llave);
             }
-            
-            for(String llave : botonesPersonas.keySet()){
+
+            for (String llave : botonesPersonas.keySet()) {
                 llavesPersonas.add(llave);
             }
-            
-            OpcionesFrame ventana = new OpcionesFrame(llavesTaxis,llavesPersonas, Inicio.this);
+
+            OpcionesFrame ventana = new OpcionesFrame(llavesTaxis, llavesPersonas, InicioFrame.this);
             ventana.setVisible(true);
         }
     }//GEN-LAST:event_simular1ActionPerformed
 
-    public void ejecutarSimulador(String taxiSeleccionado, String personaSeleccionada){
+    public void ejecutarSimulador(String taxiSeleccionado, String personaSeleccionada) {
         trazaTaxiRespuesta = itaxiService.destinoMasCercano(taxiSeleccionado, personaSeleccionada);
         List<String> recorrido = new ArrayList<>();
         pintarCamino(null, null, true, false);
 
         pintarCaminoTaxi(trazaTaxiRespuesta, recorrido);
+        trazaTaxiText.setText(TRAZA_TAXI_TEXT + trazaTaxiRespuesta.getDijkstra().getRecorrido());
 
         recorrido.clear();
         trazaPersonaRespuesta = itaxiService.destinoMasCercano(personaSeleccionada, lugarFinalPersona);
@@ -484,16 +509,17 @@ public class Inicio extends javax.swing.JFrame {
         this.lugarInicioPersona = recorrido.get(0);
         this.botonesTaxis.remove(taxiSeleccionado);
         valorKm.setText(trazaPersonaRespuesta.getDijkstra().getCantidad() * 2000 + "$");
-        cantidadKm.setText("Km:"+String.valueOf(trazaPersonaRespuesta.getDijkstra().getCantidad()));
-     
+        cantidadKm.setText("Km:" + String.valueOf(trazaPersonaRespuesta.getDijkstra().getCantidad()));
+        trazaPersonaText1.setText(TRAZA_PERSONA_TEXT + trazaPersonaRespuesta.getDijkstra().getRecorrido());
+
         this.botonesPersonas.remove(personaSeleccionada);
         this.botonesPersonas.put(lugarInicioPersona, this.botonesLugares.get(lugarInicioPersona));
         this.lugarTaxi();
-        for(String llave : botonesTaxis.keySet()){
+        for (String llave : botonesTaxis.keySet()) {
             botonesTaxis.get(llave).setBackground(Color.YELLOW);
         }
-         for(String llave:botonesPersonas.keySet()){
-            if(!llave.equals(lugarFinalPersona)){
+        for (String llave : botonesPersonas.keySet()) {
+            if (!llave.equals(lugarFinalPersona)) {
                 botonesPersonas.get(llave).setBackground(Color.red);
             }
         }
@@ -502,7 +528,7 @@ public class Inicio extends javax.swing.JFrame {
         this.ambasTrazas.setEnabled(true);
         this.core.setEnabled(true);
     }
-    
+
     private void pintarCaminoTaxi(RespuestaGrafoDto traza, List<String> recorrido) {
         for (String lugar : traza.getDijkstra().getRecorrido().split("-")) {
             recorrido.add(lugar);
@@ -512,9 +538,9 @@ public class Inicio extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void pintarCaminoPersona(List<String> recorrido, boolean trazaFinal){
-         for (String lugar : trazaPersonaRespuesta.getDijkstra().getRecorrido().split("-")) {
+
+    private void pintarCaminoPersona(List<String> recorrido, boolean trazaFinal) {
+        for (String lugar : trazaPersonaRespuesta.getDijkstra().getRecorrido().split("-")) {
             recorrido.add(lugar);
             if (recorrido.size() == 2) {
                 pintarCamino(trazaFinal ? Color.BLUE : Color.RED, recorrido, false, false);
@@ -529,8 +555,8 @@ public class Inicio extends javax.swing.JFrame {
         pintarCamino(null, recorrido, true, false);
 
         pintarCaminoTaxi(trazaTaxiRespuesta, recorrido);
-        
-        
+
+
     }//GEN-LAST:event_trazaTaxiActionPerformed
 
     private void reubicar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reubicar1ActionPerformed
@@ -551,7 +577,7 @@ public class Inicio extends javax.swing.JFrame {
     private void trazaPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trazaPersonaActionPerformed
         List<String> recorrido = new ArrayList<>();
         pintarCamino(null, null, true, false);
-        pintarCaminoPersona(recorrido,false);
+        pintarCaminoPersona(recorrido, false);
     }//GEN-LAST:event_trazaPersonaActionPerformed
 
     private void ambasTrazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ambasTrazasActionPerformed
@@ -559,40 +585,40 @@ public class Inicio extends javax.swing.JFrame {
 
         pintarCamino(null, null, true, false);
         pintarCaminoTaxi(trazaTaxiRespuesta, recorrido);
-        
+
         recorrido.clear();
-        pintarCaminoPersona(recorrido,true);
-        
-        for(String llave : botonesTaxis.keySet()){
-          botonesTaxis.get(llave).setBackground(Color.YELLOW);
+        pintarCaminoPersona(recorrido, true);
+
+        for (String llave : botonesTaxis.keySet()) {
+            botonesTaxis.get(llave).setBackground(Color.YELLOW);
         }
-        
-        for(String llave:botonesPersonas.keySet()){
-            if(!botonesLugares.get(llave).getBackground().equals(Color.BLUE)){
+
+        for (String llave : botonesPersonas.keySet()) {
+            if (!botonesLugares.get(llave).getBackground().equals(Color.BLUE)) {
                 botonesPersonas.get(llave).setBackground(Color.red);
             }
         }
-            
+
     }//GEN-LAST:event_ambasTrazasActionPerformed
 
     private void addTaxisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaxisActionPerformed
-        if(botonesTaxis.keySet().size() != 2){
+        if (botonesTaxis.keySet().size() != 2) {
             lugarTaxi();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No puedes añadir mas taxis, el maximo es 2", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addTaxisActionPerformed
 
     private void addPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonaActionPerformed
-        if(botonesPersonas.keySet().size() != 2){
+        if (botonesPersonas.keySet().size() != 2) {
             this.lugarPersona();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No puedes añadir mas personas, el maximo es 2", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addPersonaActionPerformed
 
     private void coreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coreActionPerformed
-        Matriz matrizFrame = new Matriz(trazaTaxiRespuesta.getMatris());
+        MatrizFrame matrizFrame = new MatrizFrame(trazaTaxiRespuesta.getMatriz());
         matrizFrame.setVisible(true);
     }//GEN-LAST:event_coreActionPerformed
 
@@ -603,15 +629,15 @@ public class Inicio extends javax.swing.JFrame {
         Map<String, Runnable> botones = new HashMap<>();
 
         // Zona I
-        botones.put("I", () -> zonaI.setBackground(color));
-        rutas.put("I-A", () -> {
+        botones.put(Constantes.BOTON_I, () -> zonaI.setBackground(color));
+        rutas.put(Constantes.RUTA_I_A, () -> {
             tramoInicio.setBackground(color);
             tramoItoAPartOne.setBackground(color);
             tramoItoAPartTwo.setBackground(color);
             zonaI.setBackground(color);
             zonaA.setBackground(color);
         });
-        rutas.put("I-C", () -> {
+        rutas.put(Constantes.RUTA_I_C, () -> {
             tramoInicio.setBackground(color);
             tramoItoCPartOne.setBackground(color);
             tramoItoCPartTwo.setBackground(color);
@@ -619,46 +645,46 @@ public class Inicio extends javax.swing.JFrame {
             zonaC.setBackground(color);
         });
 
-        // Zona A
-        botones.put("A", () -> zonaA.setBackground(color));
-        rutas.put("A-B", () -> {
+// Zona A
+        botones.put(Constantes.BOTON_A, () -> zonaA.setBackground(color));
+        rutas.put(Constantes.RUTA_A_B, () -> {
             tramoBtoA.setBackground(color);
             zonaA.setBackground(null);
             zonaB.setBackground(color);
         });
-        rutas.put("A-I", () -> {
+        rutas.put(Constantes.RUTA_A_I, () -> {
             tramoItoAPartTwo.setBackground(color);
             tramoItoAPartOne.setBackground(color);
             tramoInicio.setBackground(color);
             zonaA.setBackground(null);
             zonaI.setBackground(color);
         });
-        rutas.put("A-D", () -> {
+        rutas.put(Constantes.RUTA_A_D, () -> {
             tramoAtoD.setBackground(color);
             zonaA.setBackground(null);
             zonaD.setBackground(color);
         });
 
-        // Zona B
-        botones.put("B", () -> zonaB.setBackground(color));
-        rutas.put("B-A", () -> {
+// Zona B
+        botones.put(Constantes.BOTON_B, () -> zonaB.setBackground(color));
+        rutas.put(Constantes.RUTA_B_A, () -> {
             tramoBtoA.setBackground(color);
             zonaB.setBackground(null);
             zonaA.setBackground(color);
         });
-        rutas.put("B-C", () -> {
+        rutas.put(Constantes.RUTA_B_C, () -> {
             tramoCtoB.setBackground(color);
             zonaB.setBackground(null);
             zonaC.setBackground(color);
         });
-        rutas.put("B-D", () -> {
+        rutas.put(Constantes.RUTA_B_D, () -> {
             tramoB.setBackground(color);
             tramoBtoDPartOne.setBackground(color);
             tramoBtoDPartTwo.setBackground(color);
             zonaB.setBackground(null);
             zonaD.setBackground(color);
         });
-        rutas.put("B-F", () -> {
+        rutas.put(Constantes.RUTA_B_F, () -> {
             tramoB.setBackground(color);
             tramoBtoFPartOne.setBackground(color);
             tramoBtoFPartTwo.setBackground(color);
@@ -666,100 +692,100 @@ public class Inicio extends javax.swing.JFrame {
             zonaF.setBackground(color);
         });
 
-        // Zona C
-        botones.put("C", () -> zonaC.setBackground(color));
-        rutas.put("C-F", () -> {
+// Zona C
+        botones.put(Constantes.BOTON_C, () -> zonaC.setBackground(color));
+        rutas.put(Constantes.RUTA_C_F, () -> {
             tramoCtoF.setBackground(color);
             zonaC.setBackground(null);
             zonaF.setBackground(color);
         });
-        rutas.put("C-I", () -> {
+        rutas.put(Constantes.RUTA_C_I, () -> {
             tramoItoCPartTwo.setBackground(color);
             tramoItoCPartOne.setBackground(color);
             tramoInicio.setBackground(color);
             zonaC.setBackground(null);
             zonaI.setBackground(color);
         });
-        rutas.put("C-B", () -> {
+        rutas.put(Constantes.RUTA_C_B, () -> {
             tramoCtoB.setBackground(color);
             zonaC.setBackground(null);
             zonaB.setBackground(color);
         });
 
-        // Zona D
-        botones.put("D", () -> zonaD.setBackground(color));
-        rutas.put("D-A", () -> {
+// Zona D
+        botones.put(Constantes.BOTON_D, () -> zonaD.setBackground(color));
+        rutas.put(Constantes.RUTA_D_A, () -> {
             tramoAtoD.setBackground(color);
             zonaD.setBackground(null);
             zonaA.setBackground(color);
         });
-        rutas.put("D-B", () -> {
+        rutas.put(Constantes.RUTA_D_B, () -> {
             tramoBtoDPartTwo.setBackground(color);
             tramoBtoDPartOne.setBackground(color);
             tramoB.setBackground(color);
             zonaD.setBackground(null);
             zonaB.setBackground(color);
         });
-        rutas.put("D-T", () -> {
+        rutas.put(Constantes.RUTA_D_T, () -> {
             tramoDtoTpartOne.setBackground(color);
             tramoDtoTpartTwo.setBackground(color);
             zonaD.setBackground(null);
             zonaT.setBackground(color);
         });
-        rutas.put("D-E", () -> {
+        rutas.put(Constantes.RUTA_D_E, () -> {
             tramoDtoE.setBackground(color);
             zonaD.setBackground(null);
             zonaE.setBackground(color);
         });
 
-        // Zona E
-        botones.put("E", () -> zonaE.setBackground(color));
-        rutas.put("E-D", () -> {
+// Zona E
+        botones.put(Constantes.BOTON_E, () -> zonaE.setBackground(color));
+        rutas.put(Constantes.RUTA_E_D, () -> {
             tramoDtoE.setBackground(color);
             zonaE.setBackground(null);
             zonaD.setBackground(color);
         });
-        rutas.put("E-T", () -> {
+        rutas.put(Constantes.RUTA_E_T, () -> {
             tramoEtoT.setBackground(color);
             zonaE.setBackground(null);
             zonaT.setBackground(color);
         });
 
-        // Zona F
-        botones.put("F", () -> zonaF.setBackground(color));
-        rutas.put("F-C", () -> {
+// Zona F
+        botones.put(Constantes.BOTON_F, () -> zonaF.setBackground(color));
+        rutas.put(Constantes.RUTA_F_C, () -> {
             tramoCtoF.setBackground(color);
             zonaF.setBackground(null);
             zonaC.setBackground(color);
         });
-        rutas.put("F-B", () -> {
+        rutas.put(Constantes.RUTA_F_B, () -> {
             tramoBtoFPartTwo.setBackground(color);
             tramoBtoFPartOne.setBackground(color);
             tramoB.setBackground(color);
             zonaF.setBackground(null);
             zonaB.setBackground(color);
         });
-        rutas.put("F-T", () -> {
+        rutas.put(Constantes.RUTA_F_T, () -> {
             tramoFtoTpartOne.setBackground(color);
             tramoFtoTpartTwo.setBackground(color);
             zonaF.setBackground(null);
             zonaT.setBackground(color);
         });
 
-        // Zona T
-        botones.put("T", () -> zonaT.setBackground(color));
-        rutas.put("T-D", () -> {
+// Zona T
+        botones.put(Constantes.BOTON_T, () -> zonaT.setBackground(color));
+        rutas.put(Constantes.RUTA_T_D, () -> {
             tramoDtoTpartTwo.setBackground(color);
             tramoDtoTpartOne.setBackground(color);
             zonaT.setBackground(null);
             zonaD.setBackground(color);
         });
-        rutas.put("T-E", () -> {
+        rutas.put(Constantes.RUTA_T_E, () -> {
             tramoEtoT.setBackground(color);
             zonaT.setBackground(null);
             zonaE.setBackground(color);
         });
-        rutas.put("T-F", () -> {
+        rutas.put(Constantes.RUTA_T_F, () -> {
             tramoFtoTpartTwo.setBackground(color);
             tramoFtoTpartOne.setBackground(color);
             zonaT.setBackground(null);
@@ -772,7 +798,7 @@ public class Inicio extends javax.swing.JFrame {
                 if (accion != null) {
                     accion.run();
                 } else {
-                    throw new IllegalArgumentException("Ruta no válida: " + llave);
+                    throw new IllegalArgumentException(ERROR_RUTA + llave);
                 }
             }
         } else if (boton) {
@@ -782,7 +808,7 @@ public class Inicio extends javax.swing.JFrame {
             if (accion != null) {
                 accion.run();
             } else {
-                throw new IllegalArgumentException("Ruta no válida: " + key);
+                throw new IllegalArgumentException(ERROR_RUTA + key);
             }
         } else {
             // Ejecutar la acción correspondiente al recorrido
@@ -791,7 +817,7 @@ public class Inicio extends javax.swing.JFrame {
             if (accion != null) {
                 accion.run();
             } else {
-                throw new IllegalArgumentException("Ruta no válida: " + key);
+                throw new IllegalArgumentException(ERROR_RUTA + key);
             }
         }
     }
@@ -803,6 +829,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton ambasTrazas;
     private javax.swing.JLabel cantidadKm;
     private javax.swing.JToggleButton core;
+    private javax.swing.JLabel destino;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -838,7 +865,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton tramoItoCPartOne;
     private javax.swing.JButton tramoItoCPartTwo;
     private javax.swing.JButton trazaPersona;
+    private javax.swing.JLabel trazaPersonaText1;
     private javax.swing.JButton trazaTaxi;
+    private javax.swing.JLabel trazaTaxiText;
     private javax.swing.JLabel valorKm;
     private javax.swing.JButton zonaA;
     private javax.swing.JButton zonaB;

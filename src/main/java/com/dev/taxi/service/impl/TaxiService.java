@@ -60,7 +60,7 @@ public class TaxiService implements ITaxiService {
         dij.setRecorrido(recorridoFinal.toString());
 
         RespuestaGrafoDto respuestaGrafo = new RespuestaGrafoDto();
-        respuestaGrafo.setMatris(generarMatris());
+        respuestaGrafo.setMatriz(generarMatris());
         respuestaGrafo.setDijkstra(dij);
 
         return respuestaGrafo;
