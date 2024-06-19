@@ -5,8 +5,8 @@
 package com.dev.taxi.view;
 
 /**
- *
- * @author bacg2
+ * La clase {@code MatrizFrame} representa una ventana que muestra una matriz en un área de texto.
+ * Se utiliza para visualizar matrices pasadas como cadenas de texto.
  */
 public class MatrizFrame extends javax.swing.JFrame {
 

@@ -20,6 +20,12 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import lombok.extern.log4j.Log4j2;
 
+
+/**
+ * La clase {@code InicioFrame} representa la ventana principal de la aplicación.
+ * Gestiona la configuración inicial y la interacción de los componentes de la interfaz
+ * de usuario, tales como botones y áreas de color para las zonas y rutas.
+ */
 @Log4j2
 public class InicioFrame extends javax.swing.JFrame {
 

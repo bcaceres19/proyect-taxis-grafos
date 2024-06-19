@@ -7,6 +7,10 @@ package com.dev.taxi.view;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * La clase {@code OpcionesFrame} representa una ventana de opciones en la aplicación.
+ * Permite la selección y configuración de opciones relacionadas con taxis y personas.
+ */
 @Log4j2
 public class OpcionesFrame extends javax.swing.JFrame {
 

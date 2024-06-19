@@ -6,10 +6,7 @@ package com.dev.taxi;
 
 import com.dev.taxi.view.InicioFrame;
 
-/**
- *
- * @author bacg2
- */
+
 public class Taxi {
 
     public static void main(String args[]) {
