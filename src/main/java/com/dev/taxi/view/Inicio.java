@@ -364,7 +364,7 @@ public class Inicio extends javax.swing.JFrame {
                 trazaPersonaActionPerformed(evt);
             }
         });
-        getContentPane().add(trazaPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, -1, -1));
+        getContentPane().add(trazaPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, -1, -1));
 
         ambasTrazas.setText("Ambas Trazas");
         ambasTrazas.addActionListener(new java.awt.event.ActionListener() {
@@ -372,7 +372,7 @@ public class Inicio extends javax.swing.JFrame {
                 ambasTrazasActionPerformed(evt);
             }
         });
-        getContentPane().add(ambasTrazas, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 120, -1));
+        getContentPane().add(ambasTrazas, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, 120, -1));
 
         addTaxis.setText("Añadir Taxi");
         addTaxis.addActionListener(new java.awt.event.ActionListener() {
@@ -380,7 +380,7 @@ public class Inicio extends javax.swing.JFrame {
                 addTaxisActionPerformed(evt);
             }
         });
-        getContentPane().add(addTaxis, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, -1, -1));
+        getContentPane().add(addTaxis, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 120, -1));
 
         addPersona.setText("Añadir Persona");
         addPersona.setToolTipText("");
@@ -389,7 +389,7 @@ public class Inicio extends javax.swing.JFrame {
                 addPersonaActionPerformed(evt);
             }
         });
-        getContentPane().add(addPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
+        getContentPane().add(addPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, 120, -1));
 
         core.setText("Core");
         core.addActionListener(new java.awt.event.ActionListener() {
@@ -397,7 +397,7 @@ public class Inicio extends javax.swing.JFrame {
                 coreActionPerformed(evt);
             }
         });
-        getContentPane().add(core, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, -1, -1));
+        getContentPane().add(core, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 80, -1));
 
         valorKm.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         valorKm.setText("0.0$");
