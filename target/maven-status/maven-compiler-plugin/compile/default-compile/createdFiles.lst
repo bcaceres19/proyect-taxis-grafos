@@ -12,7 +12,6 @@ com\dev\taxi\service\impl\TaxiService.class
 com\dev\taxi\view\Inicio$16.class
 com\dev\taxi\view\OpcionesFrame$1.class
 com\dev\taxi\view\Inicio$7.class
-com\dev\taxi\view\Matriz$1.class
 com\dev\taxi\view\Matriz.class
 com\dev\taxi\view\Inicio$13.class
 com\dev\taxi\view\Inicio$5.class
@@ -26,5 +25,5 @@ com\dev\taxi\view\Inicio$1.class
 com\dev\taxi\view\Inicio$3.class
 com\dev\taxi\Taxi.class
 com\dev\taxi\view\OpcionesFrame$2.class
-com\dev\taxi\view\Inicio$17.class
 com\dev\taxi\view\Inicio$6.class
+com\dev\taxi\Taxi$1.class

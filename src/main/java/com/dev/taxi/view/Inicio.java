@@ -32,7 +32,8 @@ public class Inicio extends javax.swing.JFrame {
     private RespuestaGrafoDto trazaPersonaRespuesta;
     private Map<String, JButton> botonesTaxis = new HashMap<>();
     private Map<String, JButton> botonesPersonas = new HashMap<>();
-
+    
+    
     /**
      * Creates new form Inicio
      */
@@ -144,6 +145,8 @@ public class Inicio extends javax.swing.JFrame {
         addTaxis = new javax.swing.JButton();
         addPersona = new javax.swing.JButton();
         core = new javax.swing.JToggleButton();
+        valorKm = new javax.swing.JLabel();
+        cantidadKm = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -393,6 +396,15 @@ public class Inicio extends javax.swing.JFrame {
         });
         getContentPane().add(core, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, -1, -1));
 
+        valorKm.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        valorKm.setText("0.0$");
+        valorKm.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(valorKm, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 90, 70));
+
+        cantidadKm.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cantidadKm.setText("Km:0.0");
+        getContentPane().add(cantidadKm, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 80, 70));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -468,7 +480,8 @@ public class Inicio extends javax.swing.JFrame {
         pintarCaminoPersona(recorrido, true);
         this.lugarInicioPersona = recorrido.get(0);
         this.botonesTaxis.remove(taxiSeleccionado);
-     
+        valorKm.setText(trazaPersonaRespuesta.getDijkstra().getCantidad() * 2000 + "$");
+        cantidadKm.setText("Km:"+String.valueOf(trazaPersonaRespuesta.getDijkstra().getCantidad()));
      
         this.botonesPersonas.remove(personaSeleccionada);
         this.botonesPersonas.put(lugarInicioPersona, this.botonesLugares.get(lugarInicioPersona));
@@ -572,7 +585,8 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_addPersonaActionPerformed
 
     private void coreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coreActionPerformed
-        // TODO add your handling code here:
+        Matriz matrizFrame = new Matriz(trazaTaxiRespuesta.getMatris());
+        matrizFrame.setVisible(true);
     }//GEN-LAST:event_coreActionPerformed
 
     private void pintarCamino(Color color, List<String> recorrido, boolean todos, boolean boton) {
@@ -775,45 +789,12 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Inicio().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addPersona;
     private javax.swing.JButton addTaxis;
     private javax.swing.JButton ambasTrazas;
+    private javax.swing.JLabel cantidadKm;
     private javax.swing.JToggleButton core;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -851,6 +832,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton tramoItoCPartTwo;
     private javax.swing.JButton trazaPersona;
     private javax.swing.JButton trazaTaxi;
+    private javax.swing.JLabel valorKm;
     private javax.swing.JButton zonaA;
     private javax.swing.JButton zonaB;
     private javax.swing.JButton zonaC;
