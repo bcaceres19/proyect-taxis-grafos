@@ -8,17 +8,13 @@ import com.dev.taxi.dto.RespuestaGrafoDto;
 import com.dev.taxi.service.ITaxiService;
 import com.dev.taxi.service.impl.TaxiService;
 import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import lombok.extern.log4j.Log4j2;
@@ -34,6 +30,8 @@ public class Inicio extends javax.swing.JFrame {
     private ITaxiService itaxiService;
     private RespuestaGrafoDto trazaTaxiRespuesta;
     private RespuestaGrafoDto trazaPersonaRespuesta;
+    private Map<String, JButton> botonesTaxis = new HashMap<>();
+    private Map<String, JButton> botonesPersonas = new HashMap<>();
 
     /**
      * Creates new form Inicio
@@ -56,9 +54,19 @@ public class Inicio extends javax.swing.JFrame {
 
     private void lugarPersona() {
         List<String> claves = new ArrayList<>(botonesLugares.keySet());
-        Random random = new Random();
-        this.lugarInicioPersona = claves.get(random.nextInt(claves.size()));
-        this.botonesLugares.get(this.lugarInicioPersona).setBackground(Color.RED);
+        while(true){
+            Random random = new Random();
+            String clave = claves.get(random.nextInt(claves.size()));
+            if(!botonesLugares.get(clave).getBackground().equals(Color.RED) 
+                    && !botonesLugares.get(clave).getBackground().equals(Color.YELLOW)
+                    && !botonesLugares.get(clave).getBackground().equals(Color.BLUE)){
+                this.lugarInicioPersona = clave;
+                this.botonesLugares.get(this.lugarInicioPersona).setBackground(Color.RED);
+                this.botonesPersonas.put(lugarInicioPersona, this.botonesLugares.get(this.lugarInicioPersona));
+                break;
+            }
+        }
+
     }
 
     private void lugarTaxi() {
@@ -68,8 +76,11 @@ public class Inicio extends javax.swing.JFrame {
             Random random = new Random();
             this.lugarInicioTaxi = claves.get(random.nextInt(claves.size()));
             botonPersona = botonesLugares.get(this.lugarInicioTaxi);
-            if (!botonPersona.getBackground().equals(Color.RED) && !botonPersona.getBackground().equals(Color.blue)) {
+            if (!botonPersona.getBackground().equals(Color.RED) &&
+                    !botonPersona.getBackground().equals(Color.blue) &&
+                    !botonesTaxis.containsKey(lugarInicioTaxi)) {
                 botonesLugares.get(this.lugarInicioTaxi).setBackground(Color.YELLOW);
+                botonesTaxis.put(lugarInicioTaxi, botonesLugares.get(this.lugarInicioTaxi));
                 break;
             }
         }
@@ -130,7 +141,9 @@ public class Inicio extends javax.swing.JFrame {
         reubicar1 = new javax.swing.JButton();
         trazaPersona = new javax.swing.JButton();
         ambasTrazas = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        addTaxis = new javax.swing.JButton();
+        addPersona = new javax.swing.JButton();
+        core = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -355,8 +368,30 @@ public class Inicio extends javax.swing.JFrame {
         });
         getContentPane().add(ambasTrazas, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 120, -1));
 
-        jButton1.setText("Añadir Taxi");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, -1, -1));
+        addTaxis.setText("Añadir Taxi");
+        addTaxis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTaxisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addTaxis, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, -1, -1));
+
+        addPersona.setText("Añadir Persona");
+        addPersona.setToolTipText("");
+        addPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPersonaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
+
+        core.setText("Core");
+        core.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coreActionPerformed(evt);
+            }
+        });
+        getContentPane().add(core, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -378,6 +413,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void zonaFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaFActionPerformed
         this.lugarFinalPersona = this.zonaF.getText();
+        this.simular1.setEnabled(true);
     }//GEN-LAST:event_zonaFActionPerformed
 
     private void zonaDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zonaDActionPerformed
@@ -404,24 +440,48 @@ public class Inicio extends javax.swing.JFrame {
         if (lugarFinalPersona == null) {
             JOptionPane.showMessageDialog(null, "Debese tener un destino para simular", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            trazaTaxiRespuesta = itaxiService.destinoMasCercano(lugarInicioTaxi, lugarInicioPersona);
+            List<String> llavesTaxis = new ArrayList<>();
+            List<String> llavesPersonas = new ArrayList<>();
 
-            List<String> recorrido = new ArrayList<>();
-
-            pintarCamino(null, recorrido, true, false);
-
-            pintarCaminoTaxi(trazaTaxiRespuesta, recorrido);
-            this.lugarInicioTaxi = recorrido.get(0);
-
-            recorrido.clear();
-            trazaPersonaRespuesta = itaxiService.destinoMasCercano(lugarInicioPersona, lugarFinalPersona);
-            pintarCaminoPersona(recorrido, true);
-            this.lugarInicioPersona = recorrido.get(0);
-            this.lugarTaxi();
+            for(String llave : botonesTaxis.keySet()){
+                llavesTaxis.add(llave);
+            }
+            
+            for(String llave : botonesPersonas.keySet()){
+                llavesPersonas.add(llave);
+            }
+            
+            OpcionesFrame ventana = new OpcionesFrame(llavesTaxis,llavesPersonas, Inicio.this);
+            ventana.setVisible(true);
         }
     }//GEN-LAST:event_simular1ActionPerformed
 
-    
+    public void ejecutarSimulador(String taxiSeleccionado, String personaSeleccionada){
+        trazaTaxiRespuesta = itaxiService.destinoMasCercano(taxiSeleccionado, personaSeleccionada);
+        List<String> recorrido = new ArrayList<>();
+        pintarCamino(null, null, true, false);
+
+        pintarCaminoTaxi(trazaTaxiRespuesta, recorrido);
+
+        recorrido.clear();
+        trazaPersonaRespuesta = itaxiService.destinoMasCercano(personaSeleccionada, lugarFinalPersona);
+        pintarCaminoPersona(recorrido, true);
+        this.lugarInicioPersona = recorrido.get(0);
+        this.botonesTaxis.remove(taxiSeleccionado);
+     
+     
+        this.botonesPersonas.remove(personaSeleccionada);
+        this.botonesPersonas.put(lugarInicioPersona, this.botonesLugares.get(lugarInicioPersona));
+        this.lugarTaxi();
+        for(String llave : botonesTaxis.keySet()){
+            botonesTaxis.get(llave).setBackground(Color.YELLOW);
+        }
+         for(String llave:botonesPersonas.keySet()){
+            if(!llave.equals(lugarFinalPersona)){
+                botonesPersonas.get(llave).setBackground(Color.red);
+            }
+        }
+    }
     
     private void pintarCaminoTaxi(RespuestaGrafoDto traza, List<String> recorrido) {
         for (String lugar : traza.getDijkstra().getRecorrido().split("-")) {
@@ -460,6 +520,10 @@ public class Inicio extends javax.swing.JFrame {
                 boton.setBackground(null);
             }
         }
+        botonesTaxis.clear();
+        botonesPersonas.clear();
+        lugarFinalPersona = null;
+        simular1.setEnabled(false);
         this.lugarPersona();
         this.lugarTaxi();
     }//GEN-LAST:event_reubicar1ActionPerformed
@@ -479,9 +543,37 @@ public class Inicio extends javax.swing.JFrame {
         recorrido.clear();
         pintarCaminoPersona(recorrido,true);
         
-        botonesLugares.get(this.lugarInicioTaxi).setBackground(Color.YELLOW);
+        for(String llave : botonesTaxis.keySet()){
+          botonesTaxis.get(llave).setBackground(Color.YELLOW);
+        }
+        
+        for(String llave:botonesPersonas.keySet()){
+            if(!botonesLugares.get(llave).getBackground().equals(Color.BLUE)){
+                botonesPersonas.get(llave).setBackground(Color.red);
+            }
+        }
             
     }//GEN-LAST:event_ambasTrazasActionPerformed
+
+    private void addTaxisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaxisActionPerformed
+        if(botonesTaxis.keySet().size() != 2){
+            lugarTaxi();
+        }else{
+            JOptionPane.showMessageDialog(null, "No puedes añadir mas taxis, el maximo es 2", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addTaxisActionPerformed
+
+    private void addPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPersonaActionPerformed
+        if(botonesPersonas.keySet().size() != 2){
+            this.lugarPersona();
+        }else{
+            JOptionPane.showMessageDialog(null, "No puedes añadir mas personas, el maximo es 2", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addPersonaActionPerformed
+
+    private void coreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coreActionPerformed
 
     private void pintarCamino(Color color, List<String> recorrido, boolean todos, boolean boton) {
 
@@ -719,8 +811,10 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addPersona;
+    private javax.swing.JButton addTaxis;
     private javax.swing.JButton ambasTrazas;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JToggleButton core;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
