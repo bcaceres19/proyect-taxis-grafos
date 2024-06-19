@@ -81,7 +81,6 @@ public class TaxiService implements ITaxiService {
                 { 0,  0,  0,  0, 18,  9,  2,  0 }  // Zona T
         };
         copiris = new int[aristas.length][aristas[0].length];
-        volverLlenar();
     }
 
     /**
