@@ -9,7 +9,6 @@ import com.dev.taxi.service.ITaxiService;
 import com.dev.taxi.service.impl.TaxiService;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,6 +50,10 @@ public class Inicio extends javax.swing.JFrame {
         this.lugarPersona();
         this.lugarTaxi();
         this.simular1.setEnabled(false);
+        this.trazaTaxi.setEnabled(false);
+        this.trazaPersona.setEnabled(false);
+        this.ambasTrazas.setEnabled(false);
+        this.core.setEnabled(false);
     }
 
     private void lugarPersona() {
@@ -494,6 +497,10 @@ public class Inicio extends javax.swing.JFrame {
                 botonesPersonas.get(llave).setBackground(Color.red);
             }
         }
+        this.trazaTaxi.setEnabled(true);
+        this.trazaPersona.setEnabled(true);
+        this.ambasTrazas.setEnabled(true);
+        this.core.setEnabled(true);
     }
     
     private void pintarCaminoTaxi(RespuestaGrafoDto traza, List<String> recorrido) {
